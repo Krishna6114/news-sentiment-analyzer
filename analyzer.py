@@ -1,6 +1,10 @@
 # analyzer.py
 import pandas as pd
+import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+# Download vader_lexicon if not present (needed for cloud deployment)
+nltk.download('vader_lexicon', quiet=True)
 
 # Initialize VADER once (no need to reload every time)
 sia = SentimentIntensityAnalyzer()
