@@ -127,13 +127,9 @@ def fetch_india_news(page_size=100):
     url = "https://newsapi.org/v2/everything"
     
     india_queries = [
-        "India politics", 
-        "India economy",
-        "India technology",
-        "India sports",
-        "India business",
-        "India health"
-    ]
+    "India news today",
+    "India latest"
+]
     
     all_data = []
     
@@ -143,7 +139,7 @@ def fetch_india_news(page_size=100):
             "q": query,
             "language": "en",
             "sortBy": "publishedAt",
-            "pageSize": 20
+            "pageSize": 50
         }
         try:
             response = requests.get(url, params=params)
