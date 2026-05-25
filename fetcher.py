@@ -118,3 +118,55 @@ def fetch_two_keywords(keyword1, keyword2, page_size=30):
     df1 = fetch_by_keyword(keyword1, page_size)
     df2 = fetch_by_keyword(keyword2, page_size)
     return df1, df2
+
+def fetch_india_news(page_size=100):
+    """
+    Fetches Indian news using keyword search since free plan
+    doesn't support country=in for top-headlines.
+    """
+    url = "https://newsapi.org/v2/everything"
+    
+    india_queries = [
+        "India politics", 
+        "India economy",
+        "India technology",
+        "India sports",
+        "India business",
+        "India health"
+    ]
+    
+    all_data = []
+    
+    for query in india_queries:
+        params = {
+            "apiKey": API_KEY,
+            "q": query,
+            "language": "en",
+            "sortBy": "publishedAt",
+            "pageSize": 20
+        }
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            data = response.json()
+            articles = data.get("articles", [])
+
+            if not articles:
+                continue
+
+            df = pd.DataFrame(articles)
+            df = df[["title", "description", "source", "publishedAt", "url"]]
+            df["source"] = df["source"].apply(lambda x: x.get("name", "Unknown"))
+            df["category"] = query.replace("India ", "")
+            df = df.dropna(subset=["title"])
+            df["publishedAt"] = pd.to_datetime(df["publishedAt"]).dt.date
+            all_data.append(df)
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching {query}: {e}")
+            continue
+
+    if all_data:
+        return pd.concat(all_data, ignore_index=True)
+    else:
+        return pd.DataFrame()

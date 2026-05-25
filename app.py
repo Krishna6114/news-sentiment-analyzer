@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import time
-from fetcher import fetch_all_categories, fetch_by_keyword, fetch_two_keywords
+from fetcher import fetch_all_categories, fetch_by_keyword, fetch_two_keywords, fetch_india_news
 from analyzer import analyze_dataframe, get_summary_stats
 from database import init_db, save_daily_sentiment, load_history
 from summarizer import summarize_headline
@@ -418,6 +418,11 @@ def load_all_data(country):
     return analyze_dataframe(df)
 
 @st.cache_data(ttl=600)
+def load_india_data():
+    df = fetch_india_news()
+    return analyze_dataframe(df)
+
+@st.cache_data(ttl=600)
 def load_keyword_data(keyword):
     df = fetch_by_keyword(keyword)
     return analyze_dataframe(df)
@@ -433,6 +438,10 @@ def load_two_keywords(k1, k2):
 # ══════════════════════════════════════════════════════════════
 if mode == "All Categories":
     with st.spinner("Fetching latest headlines..."):
+      if country == "in":
+        df = load_india_data()
+        st.info("🇮🇳 Showing Indian news fetched via keyword search (free API limitation)")
+      else:
         df = load_all_data(country)
 
     if df.empty:
