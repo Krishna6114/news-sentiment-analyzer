@@ -30,7 +30,7 @@ init_db()
 
 # ── Page Config ───────────────────────────────────────────────
 st.set_page_config(
-    page_title="News Sentiment Analyzer",
+    page_title="NewsPulse",
     page_icon="📰",
     layout="wide"
 )
@@ -392,8 +392,8 @@ if time_since_refresh > REFRESH_INTERVAL:
 st.markdown("""
 <div class="hero-banner">
     <div class="hero-badge">⚡ Live Intelligence</div>
-    <p class="hero-title">📰 News Sentiment Analyzer</p>
-    <p class="hero-subtitle">Real-time NLP analysis · Powered by VADER &amp; Groq AI</p>
+    <p class="hero-title">📰 NewsPulse</p>
+    <p class="hero-subtitle">AI-Powered News Sentiment Intelligence · VADER &amp; Groq</p>
 </div>
 """, unsafe_allow_html=True)
 
