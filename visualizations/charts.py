@@ -77,8 +77,14 @@ def compound_score_histogram(df):
         title="Distribution of Sentiment Scores",
         labels={"compound": "Compound Score (-1 to +1)"}
     )
-    fig.add_vline(x=0.05, line_dash="dash", line_color="green", annotation_text="Positive threshold")
-    fig.add_vline(x=-0.05, line_dash="dash", line_color="red", annotation_text="Negative threshold")
+    fig.add_vline(x=0.05, line_dash="dash", line_color="green",
+        annotation_text="Positive",
+        annotation_position="top right",
+        annotation_font_color="green")
+    fig.add_vline(x=-0.05, line_dash="dash", line_color="red",
+        annotation_text="Negative",
+        annotation_position="top left",
+        annotation_font_color="red")
     return apply_dark_theme(fig)
 
 

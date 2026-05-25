@@ -440,7 +440,6 @@ if mode == "All Categories":
     with st.spinner("Fetching latest headlines..."):
       if country == "in":
         df = load_india_data()
-        st.info("🇮🇳 Showing Indian news fetched via keyword search (free API limitation)")
       else:
         df = load_all_data(country)
 
