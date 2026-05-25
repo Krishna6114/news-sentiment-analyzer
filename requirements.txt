@@ -6,3 +6,4 @@ wordcloud
 requests
 python-dotenv
 matplotlib
+groq
